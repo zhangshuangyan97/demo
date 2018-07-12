@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 
 from user.forms import RegisterForm
 
@@ -7,7 +7,9 @@ def register(request):
         form = RegisterForm(request.POST)
         if form.is_valid(): # 返回True或Flase
             user = form.save()
-
+            return redirect("/user/info")
+        else:
+            return render(request, "register.html",{"error": form.errors})
     return render(request,"register.html")
 def login(request):
     return render(request,"register.html")
