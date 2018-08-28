@@ -33,7 +33,8 @@ def login(request):
                 return redirect('/user/info/')
             else:
                 return render(request, "login.html", {"error": "密码错误"})
-    return render(request,"login.html")
+    return render(request,"login.html",)
+ # {'outh_url':outh_url}
 
 def logout(request):
     request.session.flush()
@@ -43,3 +44,8 @@ def user_info(request):
     uid = request.session['uid']
     user = User.objects.get(id=uid)
     return render(request,"user_info.html",{"user":user})
+
+
+def wb_callback(request):
+    return
+

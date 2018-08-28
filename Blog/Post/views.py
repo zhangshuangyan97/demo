@@ -1,5 +1,5 @@
 from math import ceil
-
+from django.core.cache import cache
 from django.shortcuts import render, redirect
 
 from Post.models import Post
@@ -28,7 +28,11 @@ def edit_post(request):
 
 def read_post(request):
     post_id = int(request.GET.get("post_id"))
-    post = Post.objects.get(id = post_id)
+    key = 'Post-%s'% post_id
+    post = cache.get(key)
+    if post is None:
+        post = Post.objects.get(id = post_id)
+        cache.set(key,post)
     return render(request, "read_post.html", {"post": post})
 
 def post_list(request):
